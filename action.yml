@@ -1,0 +1,11 @@
+name: 'Setup Ant'
+description: 'Install ant'
+author: 'mobilcom-debitel'
+inputs:
+  ant-version:
+    description: 'Ant version' 
+    required: true
+    default: '1.10.9'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
