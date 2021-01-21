@@ -1,32 +1,32 @@
-let tempDirectory = process.env['RUNNER_TEMPDIRECTORY'] || '';
+let tempDirectory = process.env["RUNNER_TEMPDIRECTORY"] || "";
 
-import * as core from '@actions/core';
-import * as tc from '@actions/tool-cache';
-import * as path from 'path';
+import * as core from "@actions/core";
+import * as tc from "@actions/tool-cache";
+import * as path from "path";
 
 if (!tempDirectory) {
   let baseLocation: string;
-  if (process.platform === 'win32') {
-    baseLocation = process.env['USERPROFILE'] || 'C:\\';
+  if (process.platform === "win32") {
+    baseLocation = process.env["USERPROFILE"] || "C:\\";
   } else {
-    if (process.platform === 'darwin') {
-      baseLocation = '/Users';
+    if (process.platform === "darwin") {
+      baseLocation = "/Users";
     } else {
-      baseLocation = '/home';
+      baseLocation = "/home";
     }
   }
-  tempDirectory = path.join(baseLocation, 'actions', 'temp');
+  tempDirectory = path.join(baseLocation, "actions", "temp");
 }
 
 export async function getAnt(version: string) {
   let toolPath: string;
-  toolPath = tc.find('ant', version);
+  toolPath = tc.find("ant", version);
 
   if (!toolPath) {
     toolPath = await downloadAnt(version);
   }
 
-  toolPath = path.join(toolPath, 'bin');
+  toolPath = path.join(toolPath, "bin");
   core.addPath(toolPath);
 }
 
@@ -39,7 +39,7 @@ async function downloadAnt(version: string): Promise<string> {
     const downloadPath = await tc.downloadTool(downloadUrl);
     const extractedPath = await tc.extractTar(downloadPath);
     let toolRoot = path.join(extractedPath, toolDirectoryName);
-    return await tc.cacheDir(toolRoot, 'ant', version);
+    return await tc.cacheDir(toolRoot, "ant", version);
   } catch (err) {
     throw err;
   }

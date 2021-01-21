@@ -1,9 +1,9 @@
-import * as core from '@actions/core';
-import * as installer from './installer';
+import * as core from "@actions/core";
+import * as installer from "./installer";
 
 async function run() {
   try {
-    let version = core.getInput('ant-version');
+    let version = core.getInput("ant-version");
     if (version) {
       await installer.getAnt(version);
     }
